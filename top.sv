@@ -36,7 +36,7 @@ end
       .reset(reset),
       .btn({pb[6], pb[2], pb[3], pb[1]}),  // Direct button connection
       .display_array(display_array),
-      .gameover(gameover_signal)
+      .gameover(gameover)
   );
 
 

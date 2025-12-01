@@ -14,7 +14,7 @@ module snakeGame (
 
     // Game parameters
     localparam GRID_SIZE = 20;
-    localparam MAX_SNAKE_LENGTH = 400;  // 20x20 grid
+    localparam MAX_SNAKE_LENGTH = 20;  // originally 400, but I changed to 20 to make it simpler
     
     // Clock divider for snake speed (adjust for game speed)
     localparam SPEED_DIV = 25_000_000 / 2;  // 2 updates per second
@@ -152,7 +152,7 @@ module snakeGame (
                         end
                         
                         // Check self-collision
-                        for (int i = 0; i < snake_length; i++) begin
+                        for (int i = 0; i < MAX_SNAKE_LENGTH; i++) begin // I changed the second parameter to MAX_SNAKE_LENGTH
                             if (head_x == snake_x[i] && head_y == snake_y[i]) begin
                                 game_state <= GAME_OVER;
                                 gameover <= 1;
@@ -189,6 +189,8 @@ module snakeGame (
                     // Stay in game over state until reset
                     gameover <= 1;
                 end
+
+                default: game_state <= IDLE;
             endcase
         end
     end
@@ -203,7 +205,7 @@ module snakeGame (
         end
         
         // Draw snake body
-        for (int i = 0; i < snake_length; i++) begin
+        for (int i = 0; i < MAX_SNAKE_LENGTH; i++) begin // I changed to MAX_SNAKE_LENGTH
             if (snake_x[i] < GRID_SIZE && snake_y[i] < GRID_SIZE) begin
                 display_array[snake_y[i]][snake_x[i]] = 1'b1;
             end
